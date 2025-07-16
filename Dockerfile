@@ -25,6 +25,10 @@ RUN apt-get update \
     fonts-thai-tlwg \
     fonts-kacst \
     libxss1 \
+    && mkdir -p /usr/share/fonts/truetype/suit \
+    && wget -O /tmp/suit.zip https://github.com/sun-typeface/SUIT/releases/download/v2.0.5/SUIT-ttf.zip \
+    && unzip -j -d /usr/share/fonts/truetype/suit /tmp/suit.zip "*.ttf" \
+    && rm /tmp/suit.zip \
     && mkdir -p /usr/share/fonts/truetype/pretendard \
     && wget -O /tmp/pretendard.zip https://github.com/orioncactus/pretendard/releases/download/v1.3.9/Pretendard-1.3.9.zip \
     && unzip -j -d /usr/share/fonts/truetype/pretendard /tmp/pretendard.zip "public/static/alternative/*.ttf" \

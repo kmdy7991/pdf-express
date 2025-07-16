@@ -27,7 +27,8 @@ app.post('/generate', async (req, res) => {
         const pdfBuffer = await page.pdf({
             format: 'A4',
             printBackground: true,
-            margin: { top: '50px', right: '50px', bottom: '50px', left: '50px' }
+            margin: { top: '50px', right: '50px', bottom: '50px', left: '50px' },
+            deviceScaleFactor: 2
         });
 
         res.contentType('application/pdf');
