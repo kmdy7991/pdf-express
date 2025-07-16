@@ -46,5 +46,5 @@ app.post('/generate', async (req, res) => {
 
 const PORT = 3000;
 app.listen(PORT, () => {
-    console.log(`☕ PDF service listening on port ${PORT}`);
+    console.log(`listening on port ${PORT}`);
 });
