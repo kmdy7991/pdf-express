@@ -15,12 +15,21 @@ FROM node:20-slim
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     chromium \
+    wget \
+    unzip \
+    ca-certificates \
     fonts-noto-cjk \
+    fonts-noto-color-emoji \
     fonts-ipafont-gothic \
     fonts-wqy-zenhei \
     fonts-thai-tlwg \
     fonts-kacst \
     libxss1 \
+    && mkdir -p /usr/share/fonts/truetype/pretendard \
+    && wget -O /tmp/pretendard.zip https://github.com/orioncactus/pretendard/releases/download/v1.3.9/Pretendard-1.3.9.zip \
+    && unzip -j -d /usr/share/fonts/truetype/pretendard /tmp/pretendard.zip "public/static/alternative/*.ttf" \
+    && rm /tmp/pretendard.zip \
+    && fc-cache -f -v \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -32,8 +41,7 @@ RUN groupadd -r pdf && useradd -r -g pdf -G audio,video pdf \
 
 WORKDIR /home/pdf
 
-COPY --from=builder /src/app ./
-COPY --chown=pdf:pdf . .
+COPY --from=builder --chown=pdf:pdf /src/app ./
 
 USER pdf
 
@@ -42,4 +50,4 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 EXPOSE 3000
 
 # --no-sandbox는 컨테이너 환경에서 필수
-CMD [ "node", "server.js", "--no-sandbox" ]
+CMD [ "node", "index.js", "--no-sandbox" ]
